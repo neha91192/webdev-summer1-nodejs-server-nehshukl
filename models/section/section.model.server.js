@@ -9,7 +9,7 @@ function createSection(section) {
 }
 
 function findAllSectionsForCourse(courseId){
-    return sectionModel.find({course: courseId})
+    return sectionModel.find({courseId: courseId})
 }
 
 function incrementSectionSeats(sectionId) {

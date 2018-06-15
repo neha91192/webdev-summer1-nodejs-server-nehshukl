@@ -4,6 +4,6 @@ var sectionSchema = mongoose.Schema({
     name: String,
     maxSeats: Number,
     availableSeats: Number,
-        course: {type: mongoose.Schema.Types.ObjectId, ref: 'CourseModel'},},
+    courseId: Number},
     {collection: 'section'});
 module.exports = sectionSchema;

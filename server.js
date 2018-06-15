@@ -70,6 +70,6 @@ var userService = require('./services/user.service.server');
 userService(app);
 
 require('./services/section.service.server')(app);
-require('./services/course.service.server')(app);
+
 
 app.listen(4000);
