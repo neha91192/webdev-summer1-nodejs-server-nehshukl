@@ -15,10 +15,31 @@ function findAllUsers() {
     return userModel.find();
 }
 
+function findUser(username) {
+    console.log(username)
+    return userModel.findOne({username: username});
+}
+
+function findUserByCredentials(credentials) {
+    return userModel.findOne(credentials, {username: 1});
+}
+
+function editProfile(userId, user) {
+    return userModel.update({_id: userId}, user);
+}
+
+function deleteProfile(userId) {
+    return userModel.deleteOne({_id: userId});
+}
+
 var api = {
     createUser: createUser,
     findAllUsers: findAllUsers,
-    findUserById: findUserById
+    findUserById: findUserById,
+    findUser: findUser,
+    editProfile: editProfile,
+    findUserByCredentials: findUserByCredentials,
+    deleteProfile: deleteProfile
 };
 
 module.exports = api;

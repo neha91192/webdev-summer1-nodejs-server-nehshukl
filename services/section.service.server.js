@@ -2,7 +2,7 @@ module.exports = function (app) {
     app.post('/api/course/:courseId/section', createSection)
     app.get('/api/course/:courseId/section', findAllSectionsForCourse)
     app.delete('/api/section/:sectionId', deleteSection)
-    app.post('/api/section/:sectionId/enrollment', enrollStudentInSection)
+    app.put('/api/section/:sectionId', editSection)
 
     var sectionModel = require('../models/section/section.model.server');
     var enrollmentModel = require('../models/enrollment/enrollment.model.server');
@@ -25,21 +25,27 @@ module.exports = function (app) {
 
     }
 
-    function enrollStudentInSection(req, res) {
-        var sectionId = req.params['sectionId'];
-        var currentUser = req.session.currentUser;
-        var studentId = currentUser.id;
-
-        enrollmentModel.enrollStudentInSection(studentId, sectionId).then(function (enrollment) {
-            sectionModel.decrementSectionSeats(sectionId).then(res.json(enrollment));
-
-        });
-    }
+    // function enrollStudentInSection(req, res) {
+    //     var sectionId = req.params['sectionId'];
+    //     var currentUser = req.session.currentUser;
+    //     var studentId = currentUser.id;
+    //
+    //     enrollmentModel.enrollStudentInSection(studentId, sectionId).then(function (enrollment) {
+    //         sectionModel.decrementSectionSeats(sectionId).then(res.json(enrollment));
+    //
+    //     });
+    // }
 
     function deleteSection(req, res) {
         var sectionId = req.params['sectionId'];
         sectionModel.deleteSection(sectionId)
             .then(()=> res.send());
+    }
+
+    function editSection(req, res) {
+        var section = req.body;
+        sectionModel.editSection(section)
+            .then(()=> res.json());
     }
 
 
