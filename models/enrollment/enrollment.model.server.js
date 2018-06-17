@@ -15,9 +15,14 @@ function findSectionsForStudent(studentId) {
         .exec();
 }
 
+function unenrollStudentInSection(studentId, sectionId) {
+    return enrollmentModel.remove({student: studentId, section: sectionId});
+}
+
 
 
 module.exports = {
     enrollStudentInSection: enrollStudentInSection,
-    findSectionsForStudent: findSectionsForStudent
+    findSectionsForStudent: findSectionsForStudent,
+    unenrollStudentInSection: unenrollStudentInSection
 }

@@ -2,6 +2,8 @@ module.exports = function (app) {
 
     app.post('/api/section/:sectionId/enrollment',
         enrollStudentInSection);
+    app.delete('/api/section/:sectionId/enrollment',
+        unenrollStudentFromSection);
     app.get('/api/enrollment', findSectionsForStudent);
 
     var enrollmentModel = require('../models/enrollment/enrollment.model.server');
@@ -11,27 +13,25 @@ module.exports = function (app) {
         var currentUser = req.session['currentUser'];
         var sectionId = req.params['sectionId'];
 
-        if(currentUser !== undefined){
-            enrollmentModel
-                .enrollStudentInSection(
-                    currentUser._id,
-                    sectionId)
-                .then((response) => {
-                        sectionModel.decrementSectionSeats(sectionId)
-                            .then(function (enrollment) {
-                                res.json(enrollment);
-                            })
-                    })
-                .catch(error => {
-                    if(error.code === 11000){
-                        res.sendStatus(409);
+        if (currentUser !== undefined) {
+            sectionModel.findSection(sectionId).then(
+                section => {
+                    if (section.availableSeats > 0) {
+                        enrollmentModel
+                            .enrollStudentInSection(
+                                currentUser._id,
+                                sectionId)
+                            .then((response) => {
+                                sectionModel.decrementSectionSeats(sectionId)
+                                    .then(function (enrollment) {
+                                        res.json(enrollment);
+                                    })
+                            });
+                    } else {
+                        res.sendStatus(400);
                     }
-                    }
-                );
-        } else {
-            res.sendStatus(403);
+                });
         }
-
     }
 
     function findSectionsForStudent(req, res) {
@@ -46,6 +46,33 @@ module.exports = function (app) {
         } else {
             res.sendStatus(404);
         }
+
+    }
+    
+    function unenrollStudentFromSection(req, res) {
+        var currentUser = req.session['currentUser'];
+        var sectionId = req.params['sectionId'];
+
+        if(currentUser !== undefined){
+            sectionModel.findSection(sectionId).then(
+                section => {
+                    if (section.availableSeats < section.maxSeats) {
+                        enrollmentModel
+                            .unenrollStudentInSection(
+                                currentUser._id,
+                                sectionId)
+                            .then((response) => {
+                                sectionModel.incrementSectionSeats(sectionId)
+                                    .then(function (enrollment) {
+                                        res.json(enrollment);
+                                    })
+                            });
+                    } else {
+                        res.sendStatus(400);
+                    }
+                });
+        }
+
 
     }
 

@@ -25,8 +25,15 @@ function decrementSectionSeats(sectionId) {
         _id: sectionId
     }, {
         $inc: {availableSeats: -1}
-    })
+    });
+
+
 }
+
+function findSection(sectionId) {
+    return sectionModel.findOne({_id: sectionId});
+}
+
 
 function deleteSection(sectionId) {
     return sectionModel.deleteOne({_id: sectionId});
@@ -51,6 +58,7 @@ module.exports = {
     incrementSectionSeats: incrementSectionSeats,
     decrementSectionSeats: decrementSectionSeats,
     deleteSection: deleteSection,
-    editSection: editSection
+    editSection: editSection,
+    findSection: findSection
 
 }
