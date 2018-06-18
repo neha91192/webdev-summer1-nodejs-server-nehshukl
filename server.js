@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var session =  require('express-session');
 var LOCAL_SERVER = 'http://localhost:4200';
-var REMOTE_SERVER = 'https://webdev-angular-nehshukl.herokuapp.com/home';
+var REMOTE_SERVER = 'https://webdev-angular-nehshukl.herokuapp.com';
 
 
 //mongoose.connect('mongodb://localhost/webdev-summer1-2018');
