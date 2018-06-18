@@ -44,7 +44,7 @@ module.exports = function (app) {
                     res.json(enrollments);
                 });
         } else {
-            res.sendStatus(404);
+            res.sendStatus(401);
         }
 
     }

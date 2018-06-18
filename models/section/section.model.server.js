@@ -42,8 +42,6 @@ function deleteSection(sectionId) {
 function editSection(section) {
     return sectionModel.findOne({_id: section._id})
         .then((existingSection) => {
-            console.log(section.maxSeats)
-            console.log(existingSection.maxSeats)
             let difference = section.maxSeats - existingSection.maxSeats;
             console.log(difference);
             return sectionModel.updateMany({_id: section._id}, {$set: {name: section.name, maxSeats: section.maxSeats},

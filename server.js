@@ -6,6 +6,8 @@ var session =  require('express-session');
 mongoose.connect('mongodb://localhost/webdev-summer1-2018');
 
 
+
+
 var app = express();
 
 app.use(session({resave: false, saveUninitialized: true, secret: 'any string'}))

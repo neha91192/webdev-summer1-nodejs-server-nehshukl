@@ -29,7 +29,7 @@ module.exports = function (app) {
                         res.json(user)}
                  );
         } else {
-            res.sendStatus(403)
+            res.sendStatus(401)
         }
     }
 
@@ -80,7 +80,7 @@ module.exports = function (app) {
                     res.json(user)
                 });
         } else {
-            res.sendStatus(403);
+            res.sendStatus(401);
         }
 
     }
@@ -90,8 +90,14 @@ module.exports = function (app) {
         userModel
             .findUserByCredentials(credentials)
             .then(function(user) {
-                req.session['currentUser'] = user;
-                res.json(user);
+                console.log(user)
+                if(user === null){
+                    res.sendStatus(401);
+                } else {
+                    req.session['currentUser'] = user;
+                    res.json(user);
+                }
+
             })
     }
 
@@ -100,11 +106,13 @@ module.exports = function (app) {
         res.sendStatus(200);
     }
 
-    function deleteProfile() {
+    function deleteProfile(req, res) {
         var currentUser = req.session['currentUser'];
         if(currentUser !== undefined){
             userModel.deleteProfile(currentUser._id)
                 .then((user) => res.send(user))
+        }else {
+            res.sendStatus(401);
         }
 
     }
