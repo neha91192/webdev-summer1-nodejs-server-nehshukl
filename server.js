@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 var session =  require('express-session');
 var LOCAL_SERVER = 'http://localhost:4200';
 var REMOTE_SERVER = 'https://webdev-angular-nehshukl.herokuapp.com';
+var origin = [LOCAL_SERVER, REMOTE_SERVER]
 
 
 //mongoose.connect('mongodb://localhost/webdev-summer1-2018');
@@ -20,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin",
-        REMOTE_SERVER);
+        origin);
     res.header("Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods",
