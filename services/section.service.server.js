@@ -46,7 +46,12 @@ module.exports = function (app) {
     function deleteSection(req, res) {
         var sectionId = req.params['sectionId'];
         sectionModel.deleteSection(sectionId)
-            .then(()=> res.send());
+            .then((response)=> {
+                enrollmentModel.deleteEnrollment(sectionId)
+                    .then(response => res.send(response));
+            });
+
+
     }
 
     function editSection(req, res) {

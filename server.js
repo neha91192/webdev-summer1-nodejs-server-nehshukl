@@ -3,10 +3,10 @@ var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var session =  require('express-session');
 
-mongoose.connect('mongodb://localhost/webdev-summer1-2018');
+//mongoose.connect('mongodb://localhost/webdev-summer1-2018');
 
 
-
+mongoose.connect('mongodb://heroku_fj4kp47r:j23recepdpulbuvku1lopnrpmp@ds263670.mlab.com:63670/heroku_fj4kp47r');
 
 var app = express();
 
