@@ -54,7 +54,7 @@ module.exports = function (app) {
         var sectionId = req.params['sectionId'];
 
             enrollmentModel
-                .findSectionsForStudent(sectionId)
+                .findStudentsForSection(sectionId)
                 .then(function(enrollments) {
                     res.json(enrollments);
                 });
