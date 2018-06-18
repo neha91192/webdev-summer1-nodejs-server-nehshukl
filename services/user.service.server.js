@@ -110,7 +110,11 @@ module.exports = function (app) {
         var currentUser = req.session['currentUser'];
         if(currentUser !== undefined){
             userModel.deleteProfile(currentUser._id)
-                .then((user) => res.send(user))
+                .then((user) => {
+                    req.session.destroy();
+                    res.send(user)
+                });
+
         }else {
             res.sendStatus(401);
         }
