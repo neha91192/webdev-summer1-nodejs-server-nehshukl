@@ -19,6 +19,7 @@ function findStudentsForSection(sectionId) {
     return enrollmentModel
         .find({section: sectionId})
         .populate('student')
+        .populate('section')
         .exec();
 }
 
