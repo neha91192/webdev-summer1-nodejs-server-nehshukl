@@ -14,7 +14,14 @@ mongoose.connect('mongodb://heroku_fj4kp47r:j23recepdpulbuvku1lopnrpmp@ds263670.
 
 var app = express();
 
-app.use(session({resave: false, saveUninitialized: true, secret: 'any string'}))
+app.use(session({resave: false, saveUninitialized: true, secret: 'any string',
+    cookie: {
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        maxAge: 30 * 60 * 1000
+    },
+    rolling: true}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
